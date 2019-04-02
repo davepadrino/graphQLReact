@@ -15,28 +15,28 @@ class SongCreate extends Component {
         }
     }
     
+    onSubmit(ev) {
+        ev.preventDefault();
+        this.props.mutate({
+            variables: {
+                title: this.state.title
+            },
+            // to re-reun queries and fetch the updated data
+            refetchQueries: [{ query }] // runs a query not directly asociated to the current component
+        })
+        .then(()=> hashHistory.push("/"))
+        .catch(err => console.log(err));
+
+    }
     
     render() {
 
-        const onSubmit = ev => {
-            ev.preventDefault();
-            this.props.mutate({
-                variables: {
-                    title: this.state.title
-                },
-                // to re-reun queries and fetch the updated data
-                refetchQueries: [{ query }] // runs a query not directly asociated to the current component
-            })
-            .then(()=> hashHistory.push("/"))
-            .catch(err => console.log(err));
-
-        }
 
         return (
         <div>
             <Link to="/">Back</Link>
             <h3>CREATE NEW SONG</h3>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={(ev) => this.onSubmit(ev)}>
                 <label>Song title:</label>
                 <input type="text" 
                     onChange = {ev => this.setState({title: ev.target.value})}
