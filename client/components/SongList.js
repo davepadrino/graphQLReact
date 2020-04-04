@@ -27,7 +27,7 @@ class SongList extends Component {
                 </i>
             </li>
         ))
-    }
+    } 
 
   render() {
     if (this.props.data.loading) {
